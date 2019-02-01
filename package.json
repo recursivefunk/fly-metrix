@@ -1,0 +1,24 @@
+{
+  "name": "fly-metrix",
+  "version": "1.0.0",
+  "description": "AWS CloudWatch metrics wrapper, with style",
+  "main": "index.js",
+  "scripts": {
+    "test": "node test/test.js"
+  },
+  "keywords": [
+    "metrics",
+    "aws",
+    "cloudwatch",
+    "measure"
+  ],
+  "author": "Johnny Ray Austin <hi@johnnyray.me>",
+  "license": "MIT",
+  "dependencies": {
+    "good-env": "^4.0.0"
+  },
+  "devDependencies": {
+    "dotenv": "^6.2.0",
+    "tape": "^4.9.2"
+  }
+}
