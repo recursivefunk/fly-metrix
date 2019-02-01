@@ -1,26 +1,10 @@
 
-const {
-  genCounterMetric
-} = require('./lib/utils')
+const createCounter = require('./lib/create-counter')
 
-const Metrix = function (namespace='Metrix') {
+const FlyMetrix = function (namespace = 'FlyMetrix') {
   return Object.create({
-    counter (name='counter') {
-      let n = 0
-      return {
-        inc (amnt = 1) {
-          n = n + amnt
-          return n
-        },
-        dec (amnt = 1) {
-          n = n - amnt
-          return n
-        },
-        count: () => n,
-        getMetric: () => genCounterMetric(n, { namespace, name })
-      }
-    }
+    counter: (name = 'counter') => createCounter(name, namespace)
   })
 }
 
-module.exports = Metrix
+module.exports = FlyMetrix
