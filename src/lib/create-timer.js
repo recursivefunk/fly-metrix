@@ -1,11 +1,21 @@
 
 const cuid = require('cuid')
+const genTimerMetric = (n, { namespace = 'FlyMetrix', name = 'timer', dimensions = [] }) => (
+  {
+    Namespace: namespace,
+    Unit: 'milliseconds',
+    Value: n,
+    Timestamp: Math.floor(new Date() / 1000),
+    Dimensions: dimensions
+  }
+)
 
 module.exports = (name, namespace) => {
   const uid = cuid()
   let run = 0
   let isRunning = false
   let startTime
+  let runs = []
 
   return Object.freeze({
     start () {
@@ -21,7 +31,17 @@ module.exports = (name, namespace) => {
       const duration = end - start
       startTime = null
       isRunning = false
+      runs.push(duration)
       return { start, end, duration }
+    },
+
+    computeStats () {
+      return {
+        Minimum: Math.min(...runs),
+        Maxiumum: Math.max(...runs),
+        Sum: runs.reduce((a, b) => a + b, 0),
+        SampleCount: runs.length
+      }
     },
 
     id: () => uid

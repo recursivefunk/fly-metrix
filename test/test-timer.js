@@ -29,4 +29,28 @@ test('you can\'t stop a timer which has not been started', t => {
   t.end()
 })
 
+test('it computes stats', t => {
+  const metrics = FlyMetrix('things')
+  const timer = metrics.timer('timer')
+
+  timer.start()
+  wait(100)
+    .then(() => {
+      timer.stop()
+      timer.start()
+      return wait(300)
+    })
+    .then(() => {
+      timer.stop()
+      const stats = timer.computeStats()
+      t.equal(
+        true,
+        stats.Sum >= 400,
+        'sum is calculated'
+      )
+      t.equal(stats.SampleCount, 2, 'sample count is correct')
+      t.end()
+    })
+})
+
 const wait = n => new Promise(r => setTimeout(r, n))
