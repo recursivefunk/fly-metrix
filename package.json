@@ -4,7 +4,7 @@
   "description": "AWS CloudWatch metrics wrapper, with style",
   "main": "index.js",
   "scripts": {
-    "test": "node test/test.js"
+    "test": "tape test/**/test-*.js"
   },
   "keywords": [
     "metrics",
@@ -15,6 +15,7 @@
   "author": "Johnny Ray Austin <hi@johnnyray.me>",
   "license": "MIT",
   "dependencies": {
+    "cuid": "^2.1.4",
     "good-env": "^4.0.0"
   },
   "devDependencies": {
