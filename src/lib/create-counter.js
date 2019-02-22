@@ -81,12 +81,22 @@ module.exports = (name, namespace) => {
       return false
     },
 
+    /**
+     * Generates a metric object which CloudWatch understands
+     */
     getMetric: () => genCounterMetric(n, { namespace, name }),
 
+    /**
+     * Resets relevant metric data so we can start tracking from scratch. In
+     * this case, only a counter is applicable
+     */
     reset () {
       n = 0
     },
 
+    /**
+     * Send the current metric state to CloudWatch
+     */
     report () {
       return new Promise((resolve, reject) => {
         const metric = this.getMetric()
