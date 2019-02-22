@@ -1,4 +1,5 @@
 
+const { performance } = require('perf_hooks')
 const cuid = require('cuid')
 const genTimerMetric = (n, { namespace = 'FlyMetrix', name = 'timer', dimensions = [] }) => (
   {
@@ -24,7 +25,7 @@ module.exports = (name, namespace) => {
      */
     start () {
       if (isRunning) throw Error(`The timer was already started at ${startTime}`)
-      startTime = Date.now()
+      startTime = performance.now()
       isRunning = true
     },
 
@@ -35,7 +36,7 @@ module.exports = (name, namespace) => {
     stop () {
       if (!isRunning) throw Error(`The timer has not been started`)
       const start = startTime
-      const end = Date.now()
+      const end = performance.now()
       const duration = end - start
       startTime = null
       isRunning = false

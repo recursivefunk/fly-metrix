@@ -1,8 +1,11 @@
 {
   "name": "fly-metrix",
-  "version": "1.0.0-alpha.0",
+  "version": "1.0.0-alpha.1",
   "description": "AWS CloudWatch metrics wrapper, with style",
   "main": "index.js",
+  "engines": {
+    "node": ">=8.11.3"
+  },
   "scripts": {
     "test": "tape test/**/test-*.js"
   },
