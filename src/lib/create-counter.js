@@ -1,6 +1,9 @@
 
 const AWS = require('aws-sdk')
 const env = require('good-env')
+const {
+  mapToObjArray
+} = require('./utils')
 const genCounterMetric = (n, { namespace = 'FlyMetrix/metrics', name = 'counter', dimensions = [] }) => (
   {
     Namespace: namespace,
@@ -19,8 +22,8 @@ const region = env.get('AWS_REGION', 'us-east-1')
 const cloudwatch = new AWS.CloudWatch({ region })
 
 module.exports = (name, namespace) => {
-  let n = 0
-  let dimensions = []
+  let _n = 0
+  let _dimensions = new Map()
 
   return Object.freeze({
     /**
@@ -30,8 +33,8 @@ module.exports = (name, namespace) => {
      */
     set (amnt) {
       if (!isNum(amnt)) throw Error(`${amnt} is not a number`)
-      n = amnt
-      return n
+      _n = amnt
+      return _n
     },
 
     /**
@@ -42,8 +45,8 @@ module.exports = (name, namespace) => {
      */
     inc (amnt = 1) {
       if (!isNum(amnt)) throw Error(`${amnt} is not a number`)
-      n = n + amnt
-      return n
+      _n = _n + amnt
+      return _n
     },
 
     /**
@@ -54,14 +57,14 @@ module.exports = (name, namespace) => {
      */
     dec (amnt = 1) {
       if (!isNum(amnt)) throw Error(`${amnt} is not a number`)
-      n = n - amnt
-      return n
+      _n = _n - amnt
+      return _n
     },
 
     /**
      * Gets the current count value
      */
-    count: () => n,
+    count: () => _n,
 
     /**
      * Adds a unique diminsion to the current set
@@ -72,10 +75,10 @@ module.exports = (name, namespace) => {
     addDimension: d => {
       if (!isDimensionObj(d)) throw Error(`${d} is not a valid dimension`)
       const key = Object.keys(d)[0]
-      const hasDimension = dimensions.some(i => Object.keys(i)[0] === key)
+      const val = d[key]
 
-      if (!hasDimension) {
-        dimensions.push(d)
+      if (!_dimensions.has(key)) { // hmm, maybe just overwrite?
+        _dimensions.set(key, val)
         return true
       }
       return false
@@ -84,14 +87,17 @@ module.exports = (name, namespace) => {
     /**
      * Generates a metric object which CloudWatch understands
      */
-    getMetric: () => genCounterMetric(n, { namespace, name }),
+    getMetric: () => {
+      const dimensions = mapToObjArray(_dimensions)
+      return genCounterMetric(_n, { namespace, name, dimensions })
+    },
 
     /**
      * Resets relevant metric data so we can start tracking from scratch. In
      * this case, only a counter is applicable
      */
     reset () {
-      n = 0
+      _n = 0
     },
 
     /**
