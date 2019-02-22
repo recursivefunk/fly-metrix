@@ -18,12 +18,20 @@ module.exports = (name, namespace) => {
   let runs = []
 
   return Object.freeze({
+    /**
+     * Start a new timer if one is not currently running
+     *
+     */
     start () {
       if (isRunning) throw Error(`The timer was already started at ${startTime}`)
       startTime = Date.now()
       isRunning = true
     },
 
+    /**
+     * Stop the currently running timer if one is running
+     *
+     */
     stop () {
       if (!isRunning) throw Error(`The timer has not been started`)
       const start = startTime
