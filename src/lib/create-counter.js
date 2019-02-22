@@ -1,13 +1,22 @@
 
-const genCounterMetric = (n, { namespace = 'FlyMetrix', name = 'counter', dimensions = [] }) => (
+const AWS = require('aws-sdk')
+const env = require('good-env')
+const genCounterMetric = (n, { namespace = 'FlyMetrix/metrics', name = 'counter', dimensions = [] }) => (
   {
     Namespace: namespace,
-    Unit: 'count',
-    Value: n,
-    Timestamp: Math.floor(new Date() / 1000),
-    Dimensions: dimensions
+    MetricData: [
+      {
+        MetricName: name,
+        Unit: 'Count',
+        Value: n,
+        Timestamp: Math.floor(new Date() / 1000),
+        Dimensions: dimensions
+      }
+    ]
   }
 )
+const region = env.get('AWS_REGION', 'us-east-1')
+const cloudwatch = new AWS.CloudWatch({ region })
 
 module.exports = (name, namespace) => {
   let n = 0
@@ -72,7 +81,23 @@ module.exports = (name, namespace) => {
       return false
     },
 
-    getMetric: () => genCounterMetric(n, { namespace, name })
+    getMetric: () => genCounterMetric(n, { namespace, name }),
+
+    reset () {
+      n = 0
+    },
+
+    report () {
+      return new Promise((resolve, reject) => {
+        const metric = this.getMetric()
+        cloudwatch.putMetricData(metric).promise()
+          .then(r => {
+            this.reset()
+            resolve(r)
+          })
+          .catch(reject)
+      })
+    }
   })
 }
 

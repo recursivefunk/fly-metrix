@@ -18,6 +18,7 @@
   "author": "Johnny Ray Austin <hi@johnnyray.me>",
   "license": "MIT",
   "dependencies": {
+    "aws-sdk": "^2.408.0",
     "cuid": "^2.1.4",
     "good-env": "^4.0.0"
   },

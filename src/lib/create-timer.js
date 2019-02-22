@@ -1,5 +1,7 @@
 
 const { performance } = require('perf_hooks')
+const AWS = require('aws-sdk')
+const env = require('good-env')
 const cuid = require('cuid')
 const genTimerMetric = (n, { namespace = 'FlyMetrix', name = 'timer', dimensions = [] }) => (
   {
@@ -10,6 +12,8 @@ const genTimerMetric = (n, { namespace = 'FlyMetrix', name = 'timer', dimensions
     Dimensions: dimensions
   }
 )
+const region = env.get('AWS_REGION', 'us-east-1')
+const cloudwatch = new AWS.CloudWatch({ region })
 
 module.exports = (name, namespace) => {
   const uid = cuid()
@@ -53,6 +57,15 @@ module.exports = (name, namespace) => {
       }
     },
 
-    id: () => uid
+    id: () => uid,
+
+    report: () => (
+      new Promise((resolve, reject) => {
+        const stats = this.computeStats()
+        cloudwatch.putMetricData(stats)
+          .then(resolve)
+          .catch(reject)
+      })
+    )
   })
 }

@@ -48,6 +48,11 @@ test('it computes stats', t => {
         stats.Sum >= 400,
         'sum is calculated'
       )
+      t.equal(
+        2,
+        stats.SampleCount,
+        'number of runs is correct'
+      )
       t.equal(stats.SampleCount, 2, 'sample count is correct')
       t.end()
     })

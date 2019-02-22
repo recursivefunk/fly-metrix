@@ -1,4 +1,6 @@
 
+require('dotenv').config({ path: 'test/test.env' })
+
 const test = require('tape')
 const FlyMetrix = require('../src/index')
 const getTestCounter = ({ namespace='MyMetrics', name='things' } = {}) => {
@@ -76,3 +78,16 @@ test('it does not add an invalid dimension', t => {
 
   t.end()
 })
+
+test.only('it reports', async t => {
+  const counter = getTestCounter()
+  let added
+  counter.addDimension({ foo: 'bar' })
+  counter.set(rand())
+
+  const res = await counter.report()
+  t.doesNotThrow(async () => await counter.report())
+  t.end()
+})
+
+const rand = () => Math.floor(Math.random() * 1000)
