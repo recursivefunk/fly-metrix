@@ -5,7 +5,7 @@ const test = require('tape')
 const FlyMetrix = require('../src/index')
 const getTestCounter = ({ namespace='MyMetrics', name='things' } = {}) => {
   const metrics = FlyMetrix(namespace)
-  const counter = metrics.counter(name)
+  const counter = metrics.Counter(name)
   return counter
 }
 

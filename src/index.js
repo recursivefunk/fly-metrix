@@ -4,8 +4,8 @@ const createTimer = require('./lib/create-timer')
 
 const FlyMetrix = function (namespace = 'FlyMetrix') {
   return Object.create({
-    counter: (name = 'counter') => createCounter(name, namespace),
-    timer: (name = 'timer') => createTimer(name, namespace)
+    Counter: (name = 'counter') => createCounter(name, namespace),
+    Timer: (name = 'timer') => createTimer(name, namespace)
   })
 }
 

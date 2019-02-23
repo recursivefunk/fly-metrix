@@ -4,7 +4,7 @@ const FlyMetrix = require('../src/index')
 
 test('it times stuff', t => {
   const metrics = FlyMetrix('things')
-  const timer = metrics.timer('timer')
+  const timer = metrics.Timer('timer')
   let duration
 
   timer.start()
@@ -18,7 +18,7 @@ test('it times stuff', t => {
 
 test('you can\'t stop a timer which has not been started', t => {
   const metrics = FlyMetrix('things')
-  const timer = metrics.timer('timer')
+  const timer = metrics.Timer('timer')
   let duration
 
   t.throws(
@@ -31,7 +31,7 @@ test('you can\'t stop a timer which has not been started', t => {
 
 test('it computes stats', t => {
   const metrics = FlyMetrix('things')
-  const timer = metrics.timer('timer')
+  const timer = metrics.Timer('timer')
 
   timer.start()
   wait(100)
