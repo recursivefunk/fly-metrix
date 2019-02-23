@@ -24,5 +24,5 @@ const counter = metrics.Counter('the_things')
   counter.inc(2) // 3
   await counter.report() // Report 3 for 'MyMetrics/the_things'
   counter.count() // 0
-}()
+}())
 ```
