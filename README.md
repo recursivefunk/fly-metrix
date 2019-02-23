@@ -1,7 +1,7 @@
 
 # Fly Metrix
 
-CloudWatch metrics wrapper. No production ready.
+CloudWatch metrics wrapper. Not production ready.
 
 ```
 export AWS_ACCESS_KEY_ID=your_key # Has appropriate IAM rights for putMetricData()
