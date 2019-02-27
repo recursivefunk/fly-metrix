@@ -18,10 +18,8 @@ const genCounterMetric = (n, { namespace = 'FlyMetrix/metrics', name = 'counter'
     ]
   }
 )
-const region = env.get('AWS_REGION', 'us-east-1')
-const cloudwatch = new AWS.CloudWatch({ region })
 
-module.exports = (name, namespace) => {
+module.exports = (name, namespace, cloudwatch) => {
   let _n = 0
   let _dimensions = new Map()
 

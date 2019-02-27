@@ -1,11 +1,15 @@
 
+const AWS = require('aws-sdk')
+const env = require('good-env')
 const createCounter = require('./lib/create-counter')
 const createTimer = require('./lib/create-timer')
+const region = env.get('AWS_DEFAULT_REGION', 'us-east-1')
+const cloudwatch = new AWS.CloudWatch({ region })
 
 const FlyMetrix = function (namespace = 'FlyMetrix') {
   return Object.create({
-    Counter: (name = 'counter') => createCounter(name, namespace),
-    Timer: (name = 'timer') => createTimer(name, namespace)
+    Counter: (name = 'counter') => createCounter(name, namespace, cloudwatch),
+    Timer: (name = 'timer') => createTimer(name, namespace, cloudwatch)
   })
 }
 
