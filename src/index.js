@@ -7,7 +7,6 @@ const region = env.get('AWS_DEFAULT_REGION', 'us-east-1')
 const cloudwatch = new AWS.CloudWatch({ region })
 
 const FlyMetrix = function (namespace = 'FlyMetrix') {
-
   // Ensure the required environment variables are set. Throw, if not.
   env.ensure(
     'AWS_ACCESS_KEY_ID',
