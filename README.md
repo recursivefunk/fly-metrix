@@ -6,6 +6,7 @@ CloudWatch metrics wrapper. Not production ready.
 ```
 export AWS_ACCESS_KEY_ID=your_key # Has appropriate IAM rights for putMetricData()
 export AWS_SECRET_ACCESS_KEY=your_secret_access_key
+export AWS_DEFAULT_REGION=us-east-1 # optional, defaults to us-east-1
 ```
 
 ### Counter
