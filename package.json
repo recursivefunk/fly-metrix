@@ -7,7 +7,7 @@
     "node": ">=14.15"
   },
   "scripts": {
-    "test": "tape test/**/test-*.js | tap-spec-emoji",
+    "test": "NODE_OPTIONS=--unhandled-rejections=strict jest --runInBand",
     "lint": "eslint . --fix --ext. js",
     "format": "prettier --write ."
   },
@@ -29,13 +29,41 @@
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^6.0.0",
     "prettier": "^2.7.1",
-    "tap-spec-emoji": "^6.1.2",
-    "tape": "^5.6.3"
+    "jest": "^28.1.1"
   },
   "prettier": {
     "semi": true,
     "singleQuote": true,
     "printWidth": 75,
     "trailingComma": "es5"
+  },
+  "jest": {
+    "collectCoverage": true,
+    "collectCoverageFrom": [
+      "src/**/*.js"
+    ],
+    "coverageDirectory": "coverage",
+    "coverageReporters": [
+      "text",
+      "lcov"
+    ],
+    "coverageThreshold": {
+      "global": {
+        "branches": 50,
+        "functions": 80,
+        "lines": 80
+      }
+    },
+    "modulePathIgnorePatterns": [
+      "/coverage/",
+      "/dist/"
+    ],
+    "testPathIgnorePatterns": [
+      "/coverage/",
+      "/dist/",
+      "/node_modules/"
+    ],
+    "verbose": true,
+    "clearMocks": true
   }
 }

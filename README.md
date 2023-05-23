@@ -2,7 +2,7 @@
 
 ![workflow](https://github.com/recursivefunk/fly-metrix/actions/workflows/ci.yml/badge.svg)
 
-CloudWatch metrics wrapper. Not production ready.
+Stylish (API that I like) CloudWatch metrics wrapper. Not production ready.
 
 ```
 export AWS_ACCESS_KEY_ID=your_key # Has appropriate IAM rights for putMetricData()

@@ -75,11 +75,25 @@ module.exports = ({ name, namespace, cloudwatch }) => {
       const val = d[key];
 
       if (!_dimensions.has(key)) {
-        // hmm, maybe just overwrite?
         _dimensions.set(key, val);
         return true;
       }
+
       return false;
+    },
+
+    replaceDimension(d) {
+      if (!isDimensionObj(d)) throw Error(`${d} is not a valid dimension`);
+      const key = Object.keys(d)[0];
+      const val = d[key];
+
+      if (_dimensions.has(key)) {
+        _dimensions.delete(key);
+        _dimensions.set(key, val);
+        return true;
+      } else {
+        throw Error(`Unknown dimension: '${key}'`);
+      }
     },
 
     /**
