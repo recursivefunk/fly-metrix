@@ -1,13 +1,15 @@
 {
   "name": "fly-metrix",
-  "version": "1.0.0-alpha.1",
+  "version": "1.1.0",
   "description": "AWS CloudWatch metrics wrapper, with style",
   "main": "index.js",
   "engines": {
-    "node": ">=8.11.3"
+    "node": ">=14.15"
   },
   "scripts": {
-    "test": "tape test/**/test-*.js"
+    "test": "tape test/**/test-*.js",
+    "lint": "eslint . --fix --ext. js",
+    "format": "prettier --write ."
   },
   "keywords": [
     "metrics",
@@ -15,15 +17,24 @@
     "cloudwatch",
     "measure"
   ],
-  "author": "Johnny Ray Austin <hi@johnnyray.me>",
+  "author": "Johnny Ray Austin <hi@johnny.email>",
   "license": "MIT",
   "dependencies": {
     "aws-sdk": "^2.408.0",
-    "cuid": "^2.1.4",
-    "good-env": "^4.0.0"
+    "good-env": "^6.2.2"
   },
   "devDependencies": {
-    "dotenv": "^6.2.0",
-    "tape": "^4.9.2"
+    "tape": "^5.6.3",
+    "prettier": "^2.7.1",
+    "eslint": "^8.18.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^6.0.0"
+  },
+  "prettier": {
+    "semi": true,
+    "singleQuote": true,
+    "printWidth": 75,
+    "trailingComma": "es5"
   }
 }
