@@ -1,0 +1,22 @@
+name: Fly Metrix CI
+
+on:
+  push:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up NodeJS v14
+        uses: actions/setup-node@v2
+        with:
+          node-version: 14
+          cache: 'npm'
+      - name: Install dependencies
+        run: make install
+      - name: Tests
+        run: make test
+        env:
+          DEPLOY_ENV: 'test'

@@ -1,0 +1,11 @@
+{
+  "singleQuote": true,
+  "overrides": [
+    {
+      "files": ["src/*.js", "test/*.test.js"],
+      "options": {
+        "singleQuote": false
+      }
+    }
+  ]
+}
