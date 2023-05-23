@@ -7,7 +7,7 @@
     "node": ">=14.15"
   },
   "scripts": {
-    "test": "tape test/**/test-*.js",
+    "test": "tape test/**/test-*.js | tap-spec-emoji",
     "lint": "eslint . --fix --ext. js",
     "format": "prettier --write ."
   },
@@ -24,12 +24,13 @@
     "good-env": "^6.2.2"
   },
   "devDependencies": {
-    "tape": "^5.6.3",
-    "prettier": "^2.7.1",
     "eslint": "^8.18.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-node": "^11.1.0",
-    "eslint-plugin-promise": "^6.0.0"
+    "eslint-plugin-promise": "^6.0.0",
+    "prettier": "^2.7.1",
+    "tap-spec-emoji": "^6.1.2",
+    "tape": "^5.6.3"
   },
   "prettier": {
     "semi": true,
